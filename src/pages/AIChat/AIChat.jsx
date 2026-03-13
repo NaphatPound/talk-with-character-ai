@@ -110,6 +110,15 @@ export default function AIChat() {
             if (isAutoSpeakEnabled && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel(); // Cancel any ongoing speech
                 const utterance = new SpeechSynthesisUtterance(fullResponse);
+
+                // Detect Thai characters in the response to set the correct language voice
+                const hasThai = /[\u0E00-\u0E7F]/.test(fullResponse);
+                if (hasThai) {
+                    utterance.lang = 'th-TH';
+                } else {
+                    utterance.lang = 'en-US'; // Fallback to English
+                }
+
                 window.speechSynthesis.speak(utterance);
             }
         } catch (err) {
@@ -160,7 +169,7 @@ export default function AIChat() {
         const recognition = new SpeechRecognition();
         recognition.continuous = false;
         recognition.interimResults = false;
-        // recognition.lang = 'th-TH'; // Optionally hardcode language or leave to system default
+        recognition.lang = 'th-TH'; // Support Thai speech-to-text
 
         recognition.onstart = () => setIsListening(true);
         recognition.onend = () => setIsListening(false);
