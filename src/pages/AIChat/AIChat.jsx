@@ -18,8 +18,14 @@ export default function AIChat() {
     const [models, setModels] = useState([]);
     const [selectedModel, setSelectedModel] = useState('');
     const [connected, setConnected] = useState(null);
+
+    // Speech states
+    const [isAutoSpeakEnabled, setIsAutoSpeakEnabled] = useState(false);
+    const [isListening, setIsListening] = useState(false);
+
     const chatEndRef = useRef(null);
     const abortRef = useRef(null);
+    const recognitionRef = useRef(null);
 
     useEffect(() => {
         setCharacters(getCharacters());
@@ -36,6 +42,15 @@ export default function AIChat() {
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, streamingText]);
+
+    // Cleanup speech synthesis on unmount
+    useEffect(() => {
+        return () => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        };
+    }, []);
 
     async function loadModels() {
         try {
@@ -90,6 +105,13 @@ export default function AIChat() {
             setMessages(updatedMessages);
             saveChatHistory(selectedCharId, updatedMessages);
             setStreamingText('');
+
+            // Speak the response if enabled
+            if (isAutoSpeakEnabled && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Cancel any ongoing speech
+                const utterance = new SpeechSynthesisUtterance(fullResponse);
+                window.speechSynthesis.speak(utterance);
+            }
         } catch (err) {
             if (err.name !== 'AbortError') {
                 const errorMessage = { role: 'assistant', content: `⚠️ Error: ${err.message}` };
@@ -98,6 +120,7 @@ export default function AIChat() {
         } finally {
             setIsLoading(false);
             setStreamingText('');
+            abortRef.current = null;
         }
     }
 
@@ -105,11 +128,53 @@ export default function AIChat() {
         if (selectedCharId) {
             clearChatHistory(selectedCharId);
             setMessages([]);
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
         }
     }
 
     function handleStop() {
-        abortRef.current?.abort();
+        if (abortRef.current) {
+            abortRef.current.abort();
+            abortRef.current = null;
+        }
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+    }
+
+    function toggleListening() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("Speech recognition is not supported in your browser.");
+            return;
+        }
+
+        if (isListening) {
+            recognitionRef.current?.stop();
+            setIsListening(false);
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        // recognition.lang = 'th-TH'; // Optionally hardcode language or leave to system default
+
+        recognition.onstart = () => setIsListening(true);
+        recognition.onend = () => setIsListening(false);
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error:", event.error);
+            setIsListening(false);
+        };
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            setInput((prev) => prev + (prev ? ' ' : '') + transcript);
+        };
+
+        recognitionRef.current = recognition;
+        recognition.start();
     }
 
     const selectedChar = characters.find((c) => c.id === selectedCharId);
@@ -135,6 +200,24 @@ export default function AIChat() {
                             <option key={m.name} value={m.name}>{m.name}</option>
                         ))}
                     </select>
+                </div>
+
+                {/* Auto-Speak Toggle */}
+                <div className="auto-speak-toggle" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 0' }}>
+                    <label className="switch">
+                        <input
+                            type="checkbox"
+                            checked={isAutoSpeakEnabled}
+                            onChange={(e) => {
+                                setIsAutoSpeakEnabled(e.target.checked);
+                                if (!e.target.checked && 'speechSynthesis' in window) {
+                                    window.speechSynthesis.cancel();
+                                }
+                            }}
+                        />
+                        <span className="slider round"></span>
+                    </label>
+                    <span className="text-muted-sm">🔊 Auto-Speak Replies</span>
                 </div>
 
                 {/* Character Selector */}
@@ -236,9 +319,17 @@ export default function AIChat() {
 
                         {/* Input */}
                         <div className="chat-input-area">
+                            <button
+                                className={`btn microphone-btn ${isListening ? 'listening' : ''}`}
+                                onClick={toggleListening}
+                                disabled={!connected || isLoading}
+                                title="Speech to Text"
+                            >
+                                {isListening ? '🛑' : '🎤'}
+                            </button>
                             <input
                                 type="text"
-                                placeholder={connected ? 'Type a message...' : 'Connect to Ollama first (Settings)'}
+                                placeholder={connected ? (isListening ? 'Listening...' : 'Type a message...') : 'Connect to Ollama first (Settings)'}
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
