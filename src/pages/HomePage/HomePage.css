@@ -1,0 +1,132 @@
+.hero {
+    position: relative;
+    text-align: center;
+    padding: var(--space-3xl) var(--space-xl);
+    margin-bottom: var(--space-2xl);
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: var(--space-md);
+    line-height: 1.1;
+}
+
+.hero-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-md);
+}
+
+.gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto var(--space-xl);
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 77, 141, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Features */
+.features-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+}
+
+.feature-card {
+    padding: var(--space-xl);
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+}
+
+.feature-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* Sections */
+.home-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+}
+
+/* Empty */
+.home-empty {
+    margin-top: var(--space-xl);
+}
+
+@media (max-width: 1024px) {
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

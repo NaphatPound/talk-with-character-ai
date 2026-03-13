@@ -1,0 +1,104 @@
+.chat-bubble-wrapper {
+    display: flex;
+    gap: var(--space-sm);
+    max-width: 80%;
+    animation: slideInUp 0.3s ease forwards;
+    margin-bottom: var(--space-md);
+}
+
+.chat-bubble-wrapper.left {
+    align-self: flex-start;
+    flex-direction: row;
+}
+
+.chat-bubble-wrapper.right {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.chat-bubble-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.chat-bubble-avatar-placeholder {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 4px;
+    background: var(--accent-gradient);
+    color: white;
+}
+
+.chat-bubble-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-bubble-name {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    padding: 0 4px;
+}
+
+.right .chat-bubble-name {
+    text-align: right;
+}
+
+.chat-bubble {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    position: relative;
+}
+
+.left .chat-bubble {
+    background: var(--bg-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-top-left-radius: 4px;
+    color: var(--text-primary);
+}
+
+.right .chat-bubble {
+    background: var(--accent-gradient);
+    border-top-right-radius: 4px;
+    color: white;
+}
+
+.chat-bubble-narration {
+    text-align: center;
+    max-width: 100%;
+    margin: var(--space-md) auto;
+    padding: var(--space-sm) var(--space-lg);
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    opacity: 0.9;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.chat-bubble-time {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    padding: 0 4px;
+}
+
+.right .chat-bubble-time {
+    text-align: right;
+}

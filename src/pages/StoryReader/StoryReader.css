@@ -1,0 +1,128 @@
+.story-reader {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    user-select: none;
+}
+
+.reader-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.reader-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15;
+    filter: blur(20px);
+}
+
+.reader-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 10, 26, 0.95) 0%, rgba(10, 10, 26, 0.85) 100%);
+}
+
+.reader-topbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(10, 10, 26, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.reader-title {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.reader-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.speed-slider {
+    width: 80px;
+    accent-color: var(--accent-primary);
+}
+
+.reader-progress {
+    position: relative;
+    z-index: 10;
+    height: 3px;
+    background: var(--bg-glass);
+}
+
+.reader-progress-bar {
+    height: 100%;
+    background: var(--accent-gradient);
+    transition: width 0.3s ease;
+}
+
+.reader-chat {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl);
+    overflow-y: auto;
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.reader-tap-hint {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: auto;
+    padding: var(--space-lg);
+    animation: pulse 2s infinite;
+}
+
+.reader-end {
+    text-align: center;
+    padding: var(--space-xl);
+    margin-top: auto;
+}
+
+.reader-complete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.reader-complete span {
+    font-size: 3rem;
+}
+
+.reader-complete p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.reader-chapters {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(10, 10, 26, 0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border-color);
+    overflow-x: auto;
+}

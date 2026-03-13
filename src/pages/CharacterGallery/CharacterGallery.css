@@ -1,0 +1,49 @@
+.gallery-filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.genre-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+/* Batch Generation Modal */
+.batch-modal {
+    width: 90%;
+    max-width: 500px;
+    padding: var(--space-xl);
+}
+
+.batch-mode-toggle {
+    display: flex;
+    background: var(--bg-dark);
+    padding: 4px;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+}
+
+.batch-tab {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.batch-tab:hover:not(:disabled) {
+    color: var(--text-primary);
+}
+
+.batch-tab.active {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
+}

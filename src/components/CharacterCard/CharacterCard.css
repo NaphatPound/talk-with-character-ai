@@ -1,0 +1,80 @@
+.character-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.character-card-image {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    transition: transform var(--transition-slow);
+}
+
+.character-card:hover .character-card-image {
+    transform: scale(1.05);
+}
+
+.character-card-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    background: linear-gradient(135deg, var(--bg-surface), var(--bg-secondary));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.character-card-body {
+    padding: var(--space-md);
+}
+
+.character-card-name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+    color: var(--text-primary);
+}
+
+.character-card-personality {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: var(--space-sm);
+    line-height: 1.4;
+}
+
+.character-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: var(--space-sm);
+}
+
+.character-card-actions {
+    display: flex;
+    gap: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--border-color);
+}
+
+.character-card-actions .btn {
+    flex: 1;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+}
+
+.character-card-voice {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-sm);
+}

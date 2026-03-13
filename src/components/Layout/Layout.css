@@ -1,0 +1,16 @@
+.layout {
+    padding-top: var(--navbar-height);
+    min-height: 100vh;
+}
+
+.layout-content {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    padding: var(--space-xl);
+}
+
+@media (max-width: 768px) {
+    .layout-content {
+        padding: var(--space-md);
+    }
+}
